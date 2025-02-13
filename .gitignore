@@ -36,3 +36,4 @@
 !/db/.keep
 /db/password.txt
 /db/schema.rb
+/.idea
