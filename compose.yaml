@@ -1,0 +1,38 @@
+services:
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - ".:/web"
+    ports:
+      - "3007:3000"
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      RAILS_ENV: ${RAILS_ENV}
+      DB_USER: ${MYSQL_USERNAME}
+      DB_NAME: ${DB_NAME}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      DB_HOST: db
+    env_file: ".env"
+  db:
+    image: mysql:8.0
+    secrets:
+      - db-password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql/
+      - db_data:/var/run/mysqld/
+volumes:
+  db_data:
+secrets:
+  db-password:
+    file: db/password.txt
