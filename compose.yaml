@@ -1,10 +1,12 @@
 services:
-  app:
-    build: .
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - bundle:/bundle
-      - ${APP_VOLUME}
+      - ./backend:/todo/backend
     ports:
       - "3007:3000"
     depends_on:
@@ -17,7 +19,20 @@ services:
       DB_NAME: ${DB_NAME}
       DB_PASSWORD: ${MYSQL_PASSWORD}
       DB_HOST: db
-    env_file: ".env"
+    env_file: "backend/.env"
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: npm run dev --host
+    ports:
+      - "8085:8085"
+    volumes:
+      - ./frontend:/todo/frontend
+    depends_on:
+      - backend
+    environment:
+      - CHOKIDAR_USEPOLLING=true
   db:
     image: mysql:8.0
     secrets:
@@ -37,4 +52,4 @@ volumes:
   bundle:
 secrets:
   db-password:
-    file: db/password.txt
+    file: ./backend/db/password.txt
