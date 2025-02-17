@@ -21,10 +21,10 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
-ENV RAILS_ENV="production" \
+ENV RAILS_ENV="development" \
     BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+    BUNDLE_PATH="/usr/local/bundle"
+#    BUNDLE_WITHOUT="development"
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
@@ -38,14 +38,14 @@ RUN apt-get update -qq && \
 #
 # Uncomment the following lines if you are using NodeJS need to compile assets
 #
-# ARG NODE_VERSION=18.12.0
-# ARG YARN_VERSION=1.22.19
-# ENV PATH=/usr/local/node/bin:$PATH
-# RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
-#     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
-#     npm install -g yarn@$YARN_VERSION && \
-#     npm install -g mjml && \
-#     rm -rf /tmp/node-build-master
+ ARG NODE_VERSION=18.12.0 \
+ ARG YARN_VERSION=1.22.19 \
+ ENV PATH=/usr/local/node/bin:$PATH \
+ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
+     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
+     npm install -g yarn@$YARN_VERSION && \
+     npm install -g mjml && \
+     rm -rf /tmp/node-build-master
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./

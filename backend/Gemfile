@@ -43,6 +43,14 @@ gem "thruster", require: false
 gem 'haml', '~> 6.3'
 gem 'haml-rails', '~> 2.1'
 gem 'html2haml', '~> 2.3'
+gem 'grape', '~> 2.3'
+gem 'grape-swagger', '~> 2.1', '>= 2.1.2'
+gem 'activeadmin'
+gem 'devise'
+gem 'devise_token_auth'
+gem 'sass-rails', '~> 6.0'
+gem 'sassc-rails', '~> 2.1', '>= 2.1.2'
+gem 'scss_lint', '~> 0.60.0'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -58,6 +66,7 @@ group :development, :test do
   gem 'better_errors', '~> 2.10', '>= 2.10.1'
   gem 'better_errors-pry', '~> 1.0', '>= 1.0.3'
   gem 'pry-rails', '~> 0.3.11'
+  gem 'rack-cors', '~> 2.0', '>= 2.0.2'
 end
 
 group :development do
