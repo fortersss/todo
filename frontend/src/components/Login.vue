@@ -53,6 +53,7 @@ export default {
         this.$router.push('/dashboard');
       } catch (error) {
         alert('Login failed');
+        console.error('Błąd logowania:', error);
       }
     },
   },

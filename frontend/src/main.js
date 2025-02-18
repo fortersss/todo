@@ -7,6 +7,9 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
+// Auth
+import api from './api';
+
 // Components
 import App from './App.vue'
 
@@ -15,4 +18,6 @@ const vuetify = createVuetify({
   directives,
 })
 
-createApp(App).use(vuetify).use(router).mount('#app')
+const app = createApp(App).use(vuetify).use(router);
+app.config.globalProperties.$api = api;
+app.mount('#app');

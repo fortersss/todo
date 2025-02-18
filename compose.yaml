@@ -19,6 +19,8 @@ services:
       DB_NAME: ${DB_NAME}
       DB_PASSWORD: ${MYSQL_PASSWORD}
       DB_HOST: db
+    networks:
+      - app-network
     env_file: ".env"
   frontend:
     build:
@@ -31,6 +33,8 @@ services:
       - ./frontend:/todo/frontend
     depends_on:
       - backend
+    networks:
+      - app-network
   db:
     image: mysql:8.0
     secrets:
@@ -45,9 +49,14 @@ services:
     volumes:
       - db_data:/var/lib/mysql/
       - db_data:/var/run/mysqld/
+    networks:
+      - app-network
 volumes:
   db_data:
   bundle:
 secrets:
   db-password:
     file: ./backend/db/password.txt
+networks:
+  app-network:
+    driver: bridge

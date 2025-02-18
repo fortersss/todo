@@ -38,7 +38,7 @@ RUN apt-get update -qq && \
 #
 # Uncomment the following lines if you are using NodeJS need to compile assets
 #
- ARG NODE_VERSION=18.12.0 \
+ ARG NODE_VERSION=23.8.0 \
  ARG YARN_VERSION=1.22.19 \
  ENV PATH=/usr/local/node/bin:$PATH \
  RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
